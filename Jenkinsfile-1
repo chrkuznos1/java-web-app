@@ -6,9 +6,11 @@ pipeline {
   stages {
     stage('Scan') {
       steps {
+    withCredentials([string(credentialsId: 'jenkins-sonar', variable: 'SONAR_TOKEN')]) {
         withSonarQubeEnv(installationName: 'sq1') { 
           sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
         }
+      }
       }
     }
   }
